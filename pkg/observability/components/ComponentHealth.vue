@@ -1,6 +1,10 @@
 <script>
 import { mapGetters } from "vuex";
-import {ConnectionStatus, FetchError, loadComponent} from "../modules/suseObservability";
+import {
+  ConnectionStatus,
+  FetchError,
+  loadComponent,
+} from "../modules/suseObservability";
 import { isCrdLoaded, loadSuseObservabilitySettings } from "../modules/rancher";
 import { buildUrn } from "../modules/urn";
 import { HEALTH_STATE_TYPES } from "../types/types";

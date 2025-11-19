@@ -104,8 +104,8 @@ export default {
       this.url = settings.url;
     } catch (e) {
       this.observationStatus = await loadObservationStatus(
-          this.clusterId,
-          settings,
+        this.clusterId,
+        settings,
       );
     }
   },

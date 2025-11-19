@@ -83,15 +83,15 @@ export default {
       if (error instanceof FetchError) {
         if (error.status === ConnectionStatus.Unconfigured) {
           this.data = {
-            health: HEALTH_STATE_TYPES.UNCONFIGURED
-          }
+            health: HEALTH_STATE_TYPES.UNCONFIGURED,
+          };
           return;
         }
       }
 
       this.data = {
-        health: HEALTH_STATE_TYPES.CONNECTION_ERROR
-      }
+        health: HEALTH_STATE_TYPES.CONNECTION_ERROR,
+      };
     } finally {
       this.isLoading = false;
     }
@@ -111,5 +111,9 @@ export default {
     <HealthState :health="data.health" :color="color" />
   </a>
 
-  <HealthState v-else :health="HEALTH_STATE_TYPES.UNCONFIGURED" :color="color" />
+  <HealthState
+    v-else
+    :health="HEALTH_STATE_TYPES.UNCONFIGURED"
+    :color="color"
+  />
 </template>

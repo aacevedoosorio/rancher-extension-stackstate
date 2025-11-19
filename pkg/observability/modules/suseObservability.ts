@@ -126,7 +126,10 @@ export async function loadComponent(
   identifier: string,
 ) {
   if (!spec) {
-    throw new FetchError("Extension not configured", ConnectionStatus.Unconfigured);
+    throw new FetchError(
+      "Extension not configured",
+      ConnectionStatus.Unconfigured,
+    );
   }
   const creds = token(spec.serviceToken);
   const resp = await fetch(
