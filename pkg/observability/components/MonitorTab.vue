@@ -99,15 +99,6 @@ export default {
 
     try {
       const component = await loadComponent(settings, this.urn);
-
-      if (!component) {
-        this.observationStatus = await loadObservationStatus(
-            this.clusterId,
-            settings,
-        );
-        return;
-      }
-
       this.monitors = component.syncedCheckStates;
 
       this.url = settings.url;
@@ -116,7 +107,6 @@ export default {
           this.clusterId,
           settings,
       );
-      return;
     }
   },
 };
