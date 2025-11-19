@@ -97,18 +97,27 @@ export default {
 
     this.urn = this.componentIdentifier;
 
-    const component = await loadComponent(settings, this.urn);
-    if (!component) {
+    try {
+      const component = await loadComponent(settings, this.urn);
+
+      if (!component) {
+        this.observationStatus = await loadObservationStatus(
+            this.clusterId,
+            settings,
+        );
+        return;
+      }
+
+      this.monitors = component.syncedCheckStates;
+
+      this.url = settings.url;
+    } catch (e) {
       this.observationStatus = await loadObservationStatus(
-        this.clusterId,
-        settings,
+          this.clusterId,
+          settings,
       );
       return;
     }
-
-    this.monitors = component.syncedCheckStates;
-
-    this.url = settings.url;
   },
 };
 </script>

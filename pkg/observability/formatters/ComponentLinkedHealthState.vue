@@ -1,7 +1,13 @@
 <script>
 import { mapGetters } from "vuex";
 import HealthState from "../components/Health/HealthState";
-import { loadComponent } from "../modules/suseObservability";
+import {
+  ConnectionStatus,
+  FetchError,
+  loadComponent,
+  loadObservationStatus,
+  ObservationStatus
+} from "../modules/suseObservability";
 import { loadSuseObservabilitySettings, isCrdLoaded } from "../modules/rancher";
 import { buildUrn } from "../modules/urn";
 import { HEALTH_STATE_TYPES } from "../types/types";
@@ -22,6 +28,10 @@ export default {
 
   computed: {
     ...mapGetters(["currentCluster"]),
+
+    clusterId() {
+      return this.currentCluster?.id;
+    },
 
     componentIdentifier() {
       const cluster = this.currentCluster?.spec.displayName;
@@ -75,6 +85,19 @@ export default {
       };
     } catch (error) {
       this.error = error;
+
+      if (error instanceof FetchError) {
+        if (error.status === ConnectionStatus.Unconfigured) {
+          this.data = {
+            health: HEALTH_STATE_TYPES.UNCONFIGURED
+          }
+          return;
+        }
+      }
+
+      this.data = {
+        health: HEALTH_STATE_TYPES.CONNECTION_ERROR
+      }
     } finally {
       this.isLoading = false;
     }
@@ -94,5 +117,5 @@ export default {
     <HealthState :health="data.health" :color="color" />
   </a>
 
-  <HealthState v-else :health="HEALTH_STATE_TYPES.UNKNOWN" :color="color" />
+  <HealthState v-else :health="HEALTH_STATE_TYPES.UNCONFIGURED" :color="color" />
 </template>
