@@ -5,8 +5,6 @@ import {
   ConnectionStatus,
   FetchError,
   loadComponent,
-  loadObservationStatus,
-  ObservationStatus
 } from "../modules/suseObservability";
 import { loadSuseObservabilitySettings, isCrdLoaded } from "../modules/rancher";
 import { buildUrn } from "../modules/urn";
@@ -28,10 +26,6 @@ export default {
 
   computed: {
     ...mapGetters(["currentCluster"]),
-
-    clusterId() {
-      return this.currentCluster?.id;
-    },
 
     componentIdentifier() {
       const cluster = this.currentCluster?.spec.displayName;
